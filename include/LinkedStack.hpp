@@ -7,7 +7,7 @@ class LinkedStack{
 private:
     struct Node
     {
-        int value;
+        T value;
         Node* next;
     };
     
