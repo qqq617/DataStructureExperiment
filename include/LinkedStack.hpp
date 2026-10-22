@@ -46,4 +46,15 @@ public:
         size_++; 
     }
 
+    T pop(){
+        if(empty()){
+            throw std::out_of_range("Stack is empty");
+        }
+        Node* n = top_;
+        T value = top_->value;
+        top_ = top_->next;
+        delete n;
+        size_--;
+        return value;
+    }
 };
