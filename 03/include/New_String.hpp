@@ -192,12 +192,12 @@ inline bool operator<(const New_String& s1, const New_String& s2) {
     return s1.length() < s2.length();
 }
 
-ostream&  operator<<(ostream& os, const New_String& str) {
+inline ostream&  operator<<(ostream& os, const New_String& str) {
     os << str.c_str();
     return os;
 }
 
-istream& operator>>(istream& is, New_String& str) {
+inline istream& operator>>(istream& is, New_String& str) {
     str.clear();
     char ch;
     if (!(is >> ch)) {
