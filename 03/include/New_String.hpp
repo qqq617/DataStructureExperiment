@@ -14,6 +14,21 @@ private:
             s[i] = target.s[i];
         }
     }
+
+    void get_next(const New_String& str, int* next) {
+        next[0] = 0;
+        int k = 0;
+        for (int i = 1; i < str.len; i++ ) {
+            while (k > 0 && str[i] != str[k]) {
+                k = next[k-1];
+            }
+            if (str[i] == str[k]) {
+                k++;
+            }
+            next[i] = k;
+        } 
+    }
+
 public:
     New_String (const char* string) {
         int n = 0;
@@ -125,7 +140,25 @@ public:
         return *this;
     }
 
-
+    int find_kmp(const New_String& model) {
+        if (model.len == 0) return 0;
+        if (model.len > len) return -1;
+        int* next = new int [model.len];
+        get_next(model,next);
+        int j = 0;
+        for (int i = 0; i < len; i++) {
+            while (s[i] != model[j] && j != 0) {
+                j = next[j - 1]; 
+            }
+            if (s[i] == model[j]) j++;
+            if (j == model.len) {
+                delete[] next;
+                return i - model.len + 1;
+            }
+        }
+        delete[] next;
+        return -1;
+    }
 
 };
 
@@ -181,8 +214,8 @@ istream& operator>>(istream& is, New_String& str) {
         }
         tmp[++i] = ch;
     }
-
+    tmp[++i] = '\0';
     str = New_String(tmp);
-
+    delete[] tmp;
     return is;
 }
